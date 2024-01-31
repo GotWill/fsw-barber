@@ -36,6 +36,13 @@ export default async function Home() {
          {barberShop.map(item => <BarberShopItem barbershop={item} key={item.id}/>)}
         </div>
       </div>
+
+      <div className="mt-6 px-4 mb-[4.5rem]">
+       <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Populares</h2>
+        <div className="grid grid-cols-2 gap-4">
+         {barberShop.map(item => <BarberShopItem barbershop={item} key={item.id}/>)}
+        </div>
+      </div>
     </div>
   );
 }
