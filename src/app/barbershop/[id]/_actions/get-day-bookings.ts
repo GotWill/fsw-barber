@@ -1,17 +1,19 @@
-"use server"
+"use server";
 
-import { db } from "@/app/_lib/prisma"
-import { endOfDay, startOfDay } from "date-fns"
+import { db } from "@/app/_lib/prisma";
+import { endOfDay, startOfDay } from "date-fns";
 
-export const getDayBooking = async (date: Date) => {
-const booking = await db.booking.findMany({
+export const getDayBooking = async (barbershopid: string, date: Date) => {
+  const booking = await db.booking.findMany({
     where: {
-        date: {
-            lte: endOfDay(date),
-            gte: startOfDay(date)
-        }
-    }
-})
+      date: {
+        lte: endOfDay(date),
+        gte: startOfDay(date),
+      },
+        barbershopid
+      
+    },
+  });
 
-return booking
-}
+  return booking;
+};
