@@ -180,10 +180,11 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                   <AlertDialogCancel className="w-full mt-0">
                     Voltar
                   </AlertDialogCancel>
-                  <AlertDialogAction
+                  <AlertDialogAction 
                     disabled={!isBooking || isDeletedLoading}
                     onClick={handleCancelClick}
                     className="w-full"
+                    
                   >
                     {isDeletedLoading && (
                       <Loader2 className="mr-4 h-4 w-4 animate-spin" />
