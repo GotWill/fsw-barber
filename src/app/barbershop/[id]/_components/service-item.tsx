@@ -2,7 +2,7 @@
 import { Button } from "@/app/_components/ui/button";
 import { Calendar } from "@/app/_components/ui/calendar";
 import { Card, CardContent } from "@/app/_components/ui/card";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
 import {
   Sheet,
@@ -36,30 +36,28 @@ const ServiceItem = ({
   isAutenticated,
   barberShop,
 }: ServiceItemProps) => {
+  const router = useRouter();
 
-  const router = useRouter()
-
-  const {data} = useSession()
+  const { data } = useSession();
 
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [hour, setHour] = useState<string | undefined>();
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [sheetIsOpen, setSheetIsOpen] = useState<boolean>(false)
-  const [dayBookings, setDayBookings] = useState<Booking[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [sheetIsOpen, setSheetIsOpen] = useState<boolean>(false);
+  const [dayBookings, setDayBookings] = useState<Booking[]>([]);
 
   useEffect(() => {
-
-    if(!date) {
-      return
+    if (!date) {
+      return;
     }
 
     const refreshAvailableHours = async () => {
-      const _dayBookings = await getDayBooking(barberShop.id,date)
-      setDayBookings(_dayBookings)
-    }
+      const _dayBookings = await getDayBooking(barberShop.id, date);
+      setDayBookings(_dayBookings);
+    };
 
-    refreshAvailableHours()
-  }, [date, barberShop.id])
+    refreshAvailableHours();
+  }, [date, barberShop.id]);
 
   const handleDateClick = (date: Date | undefined) => {
     setDate(date);
@@ -70,67 +68,65 @@ const ServiceItem = ({
     setHour(time);
   };
 
-  
   const handleBookingSubmit = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-
-      if(!hour || !date || !data?.user){
-        return 
+      if (!hour || !date || !data?.user) {
+        return;
       }
 
+      const dateHour = Number(hour.split(":")[0]);
+      const dateMinutes = Number(hour.split(":")[1]);
+      const newDate = setMinutes(setHours(date, dateHour), dateMinutes);
 
-      const dateHour = Number(hour.split(":")[0])
-      const dateMinutes = Number(hour.split(":")[1])
-      const newDate = setMinutes(setHours(date, dateHour), dateMinutes)
+      await saveBooking({
+        serviceId: service.id,
+        barbershopId: barberShop.id,
+        date: newDate,
+        userId: (data.user as any).id,
+      });
 
-     await saveBooking({
-      serviceId: service.id,
-      barbershopId: barberShop.id,
-      date: newDate,
-      userId: (data.user as any).id
-     })
-
-     setSheetIsOpen(false)
-     setHour(undefined)
-     setDate(undefined)
-     toast("Reserva realizada com sucesso!", {
-      description: format(newDate, "'Para' dd 'de' MMMM 'ás' HH':'mm'.'", {locale: ptBR}),
-      action: {
-        label: "Visualizar",
-        onClick: () => router.push("/bookings"),
-      },
-    })
-
+      setSheetIsOpen(false);
+      setHour(undefined);
+      setDate(undefined);
+      toast("Reserva realizada com sucesso!", {
+        description: format(newDate, "'Para' dd 'de' MMMM 'ás' HH':'mm'.'", {
+          locale: ptBR,
+        }),
+        action: {
+          label: "Visualizar",
+          onClick: () => router.push("/bookings"),
+        },
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const timeList = useMemo(() => {
-    if(!date) {
-      return []
+    if (!date) {
+      return [];
     }
 
-    return generateDayTimeList(date).filter(time => {
-      const timeHour = Number(time.split(":")[0])
-      const timeMinutes = Number(time.split(":")[1])
+    return generateDayTimeList(date).filter((time) => {
+      const timeHour = Number(time.split(":")[0]);
+      const timeMinutes = Number(time.split(":")[1]);
 
-      const booking = dayBookings.find(booking => {
+      const booking = dayBookings.find((booking) => {
         const bookingHour = booking.date.getHours();
         const bookingMinutes = booking.date.getMinutes();
 
-        return bookingHour === timeHour && bookingMinutes === timeMinutes
-      })
+        return bookingHour === timeHour && bookingMinutes === timeMinutes;
+      });
 
-      if(!booking){
-        return true
+      if (!booking) {
+        return true;
       }
 
-      return false
-    })
+      return false;
+    });
   }, [date, dayBookings]);
 
   const handleBookingClick = () => {
@@ -225,19 +221,32 @@ const ServiceItem = ({
                     </div>
                   )}
 
-                  <BookingInfo booking={{
-                    barbeshop: barberShop,
-                    date: date && hour ? setMinutes(setHours(date, Number(hour.split(":")[0])), Number(hour.split(":")[1])) : undefined,
-                    service: service
-                  }} />
+                  <div className="py-6 px-5 border-t border-solid border-secondary">
+                    <BookingInfo
+                      booking={{
+                        barbeshop: barberShop,
+                        date:
+                          date && hour
+                            ? setMinutes(
+                                setHours(date, Number(hour.split(":")[0])),
+                                Number(hour.split(":")[1])
+                              )
+                            : undefined,
+                        service: service,
+                      }}
+                    />
+                  </div>
 
                   <SheetFooter className="px-5">
-                          <Button onClick={handleBookingSubmit} disabled={(!hour  || !date) || !isAutenticated}>
-                            {
-                              isLoading && <Loader2 className="mr-4 h-4 w-4 animate-spin"/>
-                            }
-                            Confirma reservar
-                          </Button>
+                    <Button
+                      onClick={handleBookingSubmit}
+                      disabled={!hour || !date || !isAutenticated}
+                    >
+                      {isLoading && (
+                        <Loader2 className="mr-4 h-4 w-4 animate-spin" />
+                      )}
+                      Confirma reservar
+                    </Button>
                   </SheetFooter>
                 </SheetContent>
               </Sheet>
