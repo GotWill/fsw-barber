@@ -10,6 +10,11 @@ import { authOptions } from "../_lib/auth";
 
 export default async function Home() {
   const barberShop = await db.barberShop.findMany();
+  const recomendsBarberShop = await db.barberShop.findMany({
+    orderBy: {
+      id: 'asc'
+    }
+  });
 
   const session = await getServerSession(authOptions);
 
@@ -74,7 +79,7 @@ export default async function Home() {
           Populares
         </h2>
         <div className="grid grid-cols-2 gap-4">
-          {barberShop.map((item) => (
+          {recomendsBarberShop.map((item) => (
             <BarberShopItem barbershop={item} key={item.id} />
           ))}
         </div>
