@@ -9,23 +9,25 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <Card>
-      <CardContent className="p-5 flex justify-between items-center">
-        <Link href="/">
-          <Image src="/logo.png" alt="logo" width={120} height={22} />
-        </Link>
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline" size="icon">
-              <MenuIcon size={18} />
-            </Button>
-          </SheetTrigger>
-          <SheetContent className="p-0">
-            <SideMenu />
-          </SheetContent>
-        </Sheet>
-      </CardContent>
-    </Card>
+    <header>
+      <Card>
+        <CardContent className="p-5 flex justify-between items-center">
+          <Link href="/">
+            <Image src="/logo.png" alt="logo" width={120} height={22} />
+          </Link>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon">
+                <MenuIcon size={18} />
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="p-0">
+              <SideMenu />
+            </SheetContent>
+          </Sheet>
+        </CardContent>
+      </Card>
+    </header>
   );
 };
 
