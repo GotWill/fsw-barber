@@ -23,6 +23,7 @@ import { saveBooking } from "../_actions/save-booking";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getDayBooking } from "../_actions/get-day-bookings";
+import BookingInfo from "@/app/_components/booking-info";
 
 interface ServiceItemProps {
   barberShop: BarberShop;
@@ -224,40 +225,12 @@ const ServiceItem = ({
                     </div>
                   )}
 
-                  <div className="py-6 px-5 border-t border-solid border-secondary">
-                    <Card>
-                      <CardContent className="p-3 flex flex-col gap-3">
-                        <div className="flex justify-between">
-                          <h2 className="font-bold">{service.name}</h2>
-                          <h3 className="font-bold text-sm">
-                            {Intl.NumberFormat("pt-BR", {
-                              style: "currency",
-                              currency: "BRL",
-                            }).format(Number(service.price))}
-                          </h3>
-                        </div>
-                        {date && (
-                          <div className="flex justify-between">
-                            <h3 className="text-gray-400 text-sm">Data</h3>
-                            <p className="text-sm">
-                              {format(date, "dd 'de' MMMM ", { locale: ptBR })}
-                            </p>
-                          </div>
-                        )}
-                        {hour && (
-                          <div className="flex justify-between">
-                            <h3 className="text-gray-400 text-sm">Horário</h3>
-                            <p className="text-sm">{hour}</p>
-                          </div>
-                        )}
+                  <BookingInfo booking={{
+                    barbeshop: barberShop,
+                    date: date && hour ? setMinutes(setHours(date, Number(hour.split(":")[0])), Number(hour.split(":")[1])) : undefined,
+                    service: service
+                  }} />
 
-                        <div className="flex justify-between">
-                          <h3 className="text-gray-400 text-sm">Barbearia</h3>
-                          <p className="text-sm">{barberShop.name}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
                   <SheetFooter className="px-5">
                           <Button onClick={handleBookingSubmit} disabled={(!hour  || !date) || !isAutenticated}>
                             {
