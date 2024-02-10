@@ -13,7 +13,7 @@ type BarberShopProps = {
 const BarberShopItem = ({ barbershop }: BarberShopProps) => {
   return (
     <Card className="min-w-full max-w-full rounded-2xl">
-      <CardContent className="px-1 pb-0">
+      <CardContent className="px-1 pb-0 pt-1">
         <div className="px-1 relative w-full h-[159px]">
           <div className="absolute left-2 top-2 z-50"> 
             <Badge variant="secondary" className="flex items-center gap-2 opacity-90">
