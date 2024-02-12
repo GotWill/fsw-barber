@@ -8,9 +8,20 @@ import SideMenu from "./side-menu";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarImage } from "./ui/avatar";
+import Search from "../(home)/_components/Search";
+import { usePathname } from "next/navigation";
 
-const Header = () => {
+interface HeaderProps {
+  searchParams?: {
+    search: string;
+  };
+}
+
+const Header = ({ searchParams }: HeaderProps) => {
   const { data, status } = useSession();
+
+  const url = usePathname();
+  console.log('url', url)
 
   return (
     <header>
@@ -19,6 +30,15 @@ const Header = () => {
           <Link href="/">
             <Image src="/logo.png" alt="logo" width={120} height={22} />
           </Link>
+          {url === "/barbershop" || url === "/bookings" && (
+            <div className="md-desk:max-w-[535px] md-desk:w-full md-mobol:hidden">
+              <Search
+                defaultValues={{
+                  search: searchParams?.search as any,
+                }}
+              />
+            </div>
+          )}
           <div className="md-desk:hidden">
             <Sheet>
               <SheetTrigger asChild>
