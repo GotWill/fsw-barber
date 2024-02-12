@@ -92,7 +92,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
           </CardContent>
         </Card>
       </SheetTrigger>
-      <SheetContent className="px-0">
+      <SheetContent className="px-0 md-desk:max-w-[400px]">
         <SheetHeader className="px-5 text-left pb-6 border-b border-solid border-secondary">
           <SheetTitle>Informações da reserva</SheetTitle>
         </SheetHeader>
