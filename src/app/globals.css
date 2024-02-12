@@ -45,3 +45,9 @@
   }
  
 }
+
+
+.basis-full{
+  flex-basis: auto;
+}
+

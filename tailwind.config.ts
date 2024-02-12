@@ -82,6 +82,9 @@ const config = {
       }
 
     },
+    backgroundImage: {
+      'heroImage': "linear-gradient(194deg, rgba(20,21,24,1) 0%, rgba(20,21,24,0.1) 100%), url('https://s3-alpha-sig.figma.com/img/09d6/cb28/95fbf0a84e0effba3cc15693d02a71a7?Expires=1708905600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=B56apB1rP~u8W~VwAR7KoIfjnWPO8Rp~pI-~eGdloB5PP1CNVYZIupXLlFVSU6GZ3clksTgI9HkORRBV8-BNXTwM7~pAlweQrxkrEdMNq1CZdaAb4nk3NqbNHzScqpVbeG7RKXT760Whpv-Q4In298gmSqhdZc6CXrByabKCJcZrGigf3xaBioLK2JruEEkVIbxGIFH~qJ-QpXEI78eTXXuC52oqaTZ6aM88Z~~mg93OHM4JWCP6fX~32Oiz59FQYKej0rOscCIyKTlZrHGB9NLuKw66B~U-AEbZJwC5GuCtcOH3z3~4hjKnqXPX8o19akOydTTarpbAaBf98ksYNQ__')",
+    }
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;

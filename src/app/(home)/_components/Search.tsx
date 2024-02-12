@@ -51,14 +51,14 @@ const Search = ({defaultValues}: SearchProps) => {
   return (
     <div className="flex items-center gap-2">
       <Form {...form}>
-        <form className="flex w-full gap-4" onSubmit={form.handleSubmit(handleSubmit)}>
+        <form className="flex w-full gap-4 " onSubmit={form.handleSubmit(handleSubmit)}>
           <FormField
             control={form.control}
             name="search"
             render={({field}) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <Input placeholder="Busque por uma barbearia..." {...field}/>
+                  <Input  placeholder="Busque por uma barbearia..." {...field}/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
