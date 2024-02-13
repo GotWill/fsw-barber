@@ -30,7 +30,7 @@ const Header = ({ searchParams }: HeaderProps) => {
           <Link href="/">
             <Image src="/logo.png" alt="logo" width={120} height={22} />
           </Link>
-          {(url === "/barbershop" || url === "/bookings") && (
+          {(url.includes("/barbershop") || url === "/bookings") && (
             <div className="md-desk:max-w-[535px] md-desk:w-full md-mobol:hidden">
               <Search
                 defaultValues={{
