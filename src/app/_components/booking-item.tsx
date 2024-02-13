@@ -33,6 +33,7 @@ import {
 } from "./ui/alert-dialog";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import BookingInfo from "./booking-info";
+import { getSession, useSession } from "next-auth/react";
 
 interface BookingItemProps {
   booking: Prisma.BookingGetPayload<{
@@ -47,11 +48,14 @@ const BookingItem = ({ booking }: BookingItemProps) => {
   const [isDeletedLoading, setIsDeletLoading] = useState<boolean>(false);
   const isBooking = isFuture(booking.date);
 
+ const {data} = useSession()
+
   const handleCancelClick = async () => {
     setIsDeletLoading(true);
     try {
-      await CancelBooking(booking.id);
-
+    const response =  await CancelBooking(booking.id, (data?.user as any).id);
+    console.log(response)
+  
       toast.success("Reservar cancelada com sucesso");
     } catch (error) {
       console.log(error);
