@@ -10,6 +10,17 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import Search from "../(home)/_components/Search";
 import { usePathname } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 
 interface HeaderProps {
   searchParams?: {
@@ -21,7 +32,7 @@ const Header = ({ searchParams }: HeaderProps) => {
   const { data, status } = useSession();
 
   const url = usePathname();
-  console.log('url', url)
+  console.log("url", url);
 
   return (
     <header>
@@ -66,9 +77,28 @@ const Header = ({ searchParams }: HeaderProps) => {
                 </Button>
               ) : (
                 <div className="flex items-center gap-2">
-                  <Avatar>
-                    <AvatarImage src={`${data?.user?.image}`} />
-                  </Avatar>
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <Avatar>
+                        <AvatarImage src={`${data?.user?.image}`} />
+                      </Avatar>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          <p className="text-base font-bold">Sair</p>
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                           <p className="text-gray-300 text-sm mb-5">Deseja sair da plataforma?</p>
+                        </AlertDialogDescription>
+                        <AlertDialogFooter className="grid grid-cols-2 items-center gap-2">
+                        <AlertDialogCancel className="mt-0 font-bold">Cancelar</AlertDialogCancel>
+                        <AlertDialogAction className="font-bold" onClick={() => signOut()}>Sair</AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogHeader>
+                    </AlertDialogContent>
+                  </AlertDialog>
+
                   <span className="font-bold text-base">
                     {data?.user?.name}
                   </span>
